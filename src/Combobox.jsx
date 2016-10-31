@@ -52,6 +52,7 @@ let propTypes = {
 
   suggest:        CustomPropTypes.filter,
   filter:         CustomPropTypes.filter,
+  sort:           CustomPropTypes.sort,
 
   busy:           PropTypes.bool,
 
@@ -78,6 +79,7 @@ var ComboBox = createReactClass({
   mixins: [
     require('./mixins/TimeoutMixin'),
     require('./mixins/DataFilterMixin'),
+    require('./mixins/DataSortMixin'),
     require('./mixins/PopupScrollToMixin'),
     require('./mixins/RtlParentContextMixin'),
     require('./mixins/AriaDescendantMixin')('input'),
@@ -452,6 +454,9 @@ var ComboBox = createReactClass({
   process(data, values, searchTerm) {
     if (this.props.filter && searchTerm)
       data = this.filter(data, searchTerm)
+
+    if (this.props.sort && searchTerm)
+      data = this.sort(data, searchTerm)
 
     return data
   }

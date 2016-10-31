@@ -56,6 +56,10 @@ module.exports = {
                   PropTypes.func,
                   PropTypes.bool,
                   PropTypes.oneOf(filterTypes)
+                ]),
+  sort:         PropTypes.oneOfType([
+                  PropTypes.func,
+                  PropTypes.bool
                 ])
 }
 
