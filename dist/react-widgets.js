@@ -1,4 +1,4 @@
-/*! (c) 2017 Jason Quense | https://github.com/jquense/react-widgets/blob/master/License.txt */
+/*! (c) 2021 Jason Quense | https://github.com/jquense/react-widgets/blob/master/License.txt */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"), require("react-dom"));
@@ -70,15 +70,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = _extends({}, configure, {
 	  DropdownList: __webpack_require__(28),
 	  Combobox: __webpack_require__(75),
-	  Calendar: __webpack_require__(78),
-	  DateTimePicker: __webpack_require__(93),
-	  NumberPicker: __webpack_require__(96),
-	  Multiselect: __webpack_require__(99),
-	  SelectList: __webpack_require__(102),
+	  Calendar: __webpack_require__(79),
+	  DateTimePicker: __webpack_require__(94),
+	  NumberPicker: __webpack_require__(97),
+	  Multiselect: __webpack_require__(100),
+	  SelectList: __webpack_require__(103),
 
 	  utils: {
-	    ReplaceTransitionGroup: __webpack_require__(91),
-	    SlideTransition: __webpack_require__(90)
+	    ReplaceTransitionGroup: __webpack_require__(92),
+	    SlideTransition: __webpack_require__(91)
 	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
@@ -4086,7 +4086,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  message: _propTypes2.default.oneOfType([_propTypes2.default.node, _propTypes2.default.string]),
 
-	  filter: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.bool, _propTypes2.default.oneOf(filterTypes)])
+	  filter: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.bool, _propTypes2.default.oneOf(filterTypes)]),
+	  sort: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.bool])
 	};
 
 	function createChainableTypeChecker(validate) {
@@ -6507,6 +6508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  suggest: _propTypes4.default.filter,
 	  filter: _propTypes4.default.filter,
+	  sort: _propTypes4.default.sort,
 
 	  busy: _propTypes2.default.bool,
 
@@ -6530,7 +6532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  displayName: 'ComboBox',
 
-	  mixins: [__webpack_require__(64), __webpack_require__(67), __webpack_require__(68), __webpack_require__(73), __webpack_require__(57)('input'), __webpack_require__(74)({
+	  mixins: [__webpack_require__(64), __webpack_require__(67), __webpack_require__(78), __webpack_require__(68), __webpack_require__(73), __webpack_require__(57)('input'), __webpack_require__(74)({
 	    willHandle: function willHandle(focused) {
 	      // not suggesting anymore
 	      !focused && this.refs.input.accept();
@@ -6861,6 +6863,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  process: function process(data, values, searchTerm) {
 	    if (this.props.filter && searchTerm) data = this.filter(data, searchTerm);
 
+	    if (this.props.sort && searchTerm) data = this.sort(data, searchTerm);
+
 	    return data;
 	  }
 	}, (_applyDecoratedDescriptor(_obj, 'handleSelect', [_interaction.widgetEditable], Object.getOwnPropertyDescriptor(_obj, 'handleSelect'), _obj), _applyDecoratedDescriptor(_obj, 'handleKeyDown', [_interaction.widgetEditable], Object.getOwnPropertyDescriptor(_obj, 'handleKeyDown'), _obj), _applyDecoratedDescriptor(_obj, 'toggle', [_interaction.widgetEditable], Object.getOwnPropertyDescriptor(_obj, 'toggle'), _obj)), _obj));
@@ -7060,6 +7064,47 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _propTypes = __webpack_require__(20);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _propTypes3 = __webpack_require__(43);
+
+	var _propTypes4 = _interopRequireDefault(_propTypes3);
+
+	var _dataHelpers = __webpack_require__(45);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = {
+
+	    propTypes: {
+	        data: _propTypes2.default.array,
+	        sort: _propTypes4.default.sort
+	    },
+
+	    sort: function sort(items, searchTerm) {
+	        var _this = this;
+
+	        var compareFunction = typeof this.props.sort === 'function' ? this.props.sort : function (itemA, itemB) {
+	            var dataTextA = (0, _dataHelpers.dataText)(itemA, _this.props.textField);
+	            var dataTextB = (0, _dataHelpers.dataText)(itemB, _this.props.textField);
+
+	            return dataTextA.localeCompare(dataTextB);
+	        };
+
+	        return [].concat(items).sort(function (itemA, itemB) {
+	            return compareFunction(itemA, itemB, searchTerm);
+	        });
+	    }
+	};
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	exports.__esModule = true;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -7091,27 +7136,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Widget2 = _interopRequireDefault(_Widget);
 
-	var _Header = __webpack_require__(79);
+	var _Header = __webpack_require__(80);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Footer = __webpack_require__(81);
+	var _Footer = __webpack_require__(82);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
-	var _Month = __webpack_require__(82);
+	var _Month = __webpack_require__(83);
 
 	var _Month2 = _interopRequireDefault(_Month);
 
-	var _Year = __webpack_require__(87);
+	var _Year = __webpack_require__(88);
 
 	var _Year2 = _interopRequireDefault(_Year);
 
-	var _Decade = __webpack_require__(88);
+	var _Decade = __webpack_require__(89);
 
 	var _Decade2 = _interopRequireDefault(_Decade);
 
-	var _Century = __webpack_require__(89);
+	var _Century = __webpack_require__(90);
 
 	var _Century2 = _interopRequireDefault(_Century);
 
@@ -7125,15 +7170,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _SlideTransition = __webpack_require__(90);
+	var _SlideTransition = __webpack_require__(91);
 
 	var _SlideTransition2 = _interopRequireDefault(_SlideTransition);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
-	var _constants = __webpack_require__(86);
+	var _constants = __webpack_require__(87);
 
 	var constants = _interopRequireWildcard(_constants);
 
@@ -7562,7 +7607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7606,7 +7651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    })
 	  },
 
-	  mixins: [__webpack_require__(66), __webpack_require__(80)],
+	  mixins: [__webpack_require__(66), __webpack_require__(81)],
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -7666,7 +7711,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7692,7 +7737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7744,7 +7789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7763,11 +7808,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _CalendarView = __webpack_require__(83);
+	var _CalendarView = __webpack_require__(84);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
@@ -7822,7 +7867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isEqual: isEqual
 	  },
 
-	  mixins: [__webpack_require__(80), __webpack_require__(57)()],
+	  mixins: [__webpack_require__(81), __webpack_require__(57)()],
 
 	  propTypes: propTypes,
 
@@ -7916,7 +7961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7939,7 +7984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
@@ -8100,7 +8145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8109,11 +8154,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _dateArithmetic = __webpack_require__(85);
+	var _dateArithmetic = __webpack_require__(86);
 
 	var _dateArithmetic2 = _interopRequireDefault(_dateArithmetic);
 
-	var _constants = __webpack_require__(86);
+	var _constants = __webpack_require__(87);
 
 	var _localizers = __webpack_require__(17);
 
@@ -8199,7 +8244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports) {
 
 	var MILI    = 'milliseconds'
@@ -8426,7 +8471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -8461,7 +8506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var calendarViewUnits = exports.calendarViewUnits = (_calendarViewUnits = {}, _calendarViewUnits[views.MONTH] = 'day', _calendarViewUnits[views.YEAR] = views.MONTH, _calendarViewUnits[views.DECADE] = views.YEAR, _calendarViewUnits[views.CENTURY] = views.DECADE, _calendarViewUnits);
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8480,11 +8525,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _CalendarView = __webpack_require__(83);
+	var _CalendarView = __webpack_require__(84);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
@@ -8526,7 +8571,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  displayName: 'YearView',
 
-	  mixins: [__webpack_require__(80), __webpack_require__(57)()],
+	  mixins: [__webpack_require__(81), __webpack_require__(57)()],
 
 	  propTypes: propTypes,
 
@@ -8599,7 +8644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8618,11 +8663,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _CalendarView = __webpack_require__(83);
+	var _CalendarView = __webpack_require__(84);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
@@ -8660,7 +8705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  displayName: 'DecadeView',
 
-	  mixins: [__webpack_require__(66), __webpack_require__(80), __webpack_require__(57)()],
+	  mixins: [__webpack_require__(66), __webpack_require__(81), __webpack_require__(57)()],
 
 	  propTypes: propTypes,
 
@@ -8738,7 +8783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8757,11 +8802,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _CalendarView = __webpack_require__(83);
+	var _CalendarView = __webpack_require__(84);
 
 	var _CalendarView2 = _interopRequireDefault(_CalendarView);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
@@ -8802,7 +8847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  displayName: 'CenturyView',
 
-	  mixins: [__webpack_require__(66), __webpack_require__(80), __webpack_require__(57)()],
+	  mixins: [__webpack_require__(66), __webpack_require__(81), __webpack_require__(57)()],
 
 	  propTypes: propTypes,
 
@@ -8881,7 +8926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8900,7 +8945,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _ReplaceTransitionGroup = __webpack_require__(91);
+	var _ReplaceTransitionGroup = __webpack_require__(92);
 
 	var _ReplaceTransitionGroup2 = _interopRequireDefault(_ReplaceTransitionGroup);
 
@@ -8912,7 +8957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _width = __webpack_require__(92);
+	var _width = __webpack_require__(93);
 
 	var _width2 = _interopRequireDefault(_width);
 
@@ -9036,7 +9081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9063,7 +9108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _height2 = _interopRequireDefault(_height);
 
-	var _width = __webpack_require__(92);
+	var _width = __webpack_require__(93);
 
 	var _width2 = _interopRequireDefault(_width);
 
@@ -9254,7 +9299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9268,7 +9313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9311,13 +9356,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _3 = _interopRequireDefault(_2);
 
-	var _dates = __webpack_require__(84);
+	var _dates = __webpack_require__(85);
 
 	var _dates2 = _interopRequireDefault(_dates);
 
 	var _localizers = __webpack_require__(17);
 
-	var _constants = __webpack_require__(86);
+	var _constants = __webpack_require__(87);
 
 	var _Widget = __webpack_require__(38);
 
@@ -9327,15 +9372,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Popup2 = _interopRequireDefault(_Popup);
 
-	var _Calendar = __webpack_require__(78);
+	var _Calendar = __webpack_require__(79);
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _TimeList = __webpack_require__(94);
+	var _TimeList = __webpack_require__(95);
 
 	var _TimeList2 = _interopRequireDefault(_TimeList);
 
-	var _DateTimePickerInput = __webpack_require__(95);
+	var _DateTimePickerInput = __webpack_require__(96);
 
 	var _DateTimePickerInput2 = _interopRequireDefault(_DateTimePickerInput);
 
@@ -9845,7 +9890,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9866,7 +9911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
-	var _dates2 = __webpack_require__(84);
+	var _dates2 = __webpack_require__(85);
 
 	var _dates3 = _interopRequireDefault(_dates2);
 
@@ -10085,7 +10130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10228,7 +10273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10271,15 +10316,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _constants = __webpack_require__(86);
+	var _constants = __webpack_require__(87);
 
-	var _repeater = __webpack_require__(97);
+	var _repeater = __webpack_require__(98);
 
 	var _repeater2 = _interopRequireDefault(_repeater);
 
 	var _localizers = __webpack_require__(17);
 
-	var _NumberInput = __webpack_require__(98);
+	var _NumberInput = __webpack_require__(99);
 
 	var _NumberInput2 = _interopRequireDefault(_NumberInput);
 
@@ -10562,7 +10607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -10588,7 +10633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10775,7 +10820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10818,11 +10863,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Popup2 = _interopRequireDefault(_Popup);
 
-	var _MultiselectInput = __webpack_require__(100);
+	var _MultiselectInput = __webpack_require__(101);
 
 	var _MultiselectInput2 = _interopRequireDefault(_MultiselectInput);
 
-	var _MultiselectTagList = __webpack_require__(101);
+	var _MultiselectTagList = __webpack_require__(102);
 
 	var _MultiselectTagList2 = _interopRequireDefault(_MultiselectTagList);
 
@@ -11409,7 +11454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11505,7 +11550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11701,7 +11746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

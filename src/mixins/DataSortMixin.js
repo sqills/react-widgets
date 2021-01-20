@@ -1,13 +1,13 @@
 'use strict';
 
-import React  from 'react';
+import PropTypes from 'prop-types';
 import CustomPropTypes from '../util/propTypes';
 import {dataText} from '../util/dataHelpers';
 
 module.exports = {
 
     propTypes: {
-        data: React.PropTypes.array,
+        data: PropTypes.array,
         sort: CustomPropTypes.sort
     },
 
